@@ -38,6 +38,8 @@ export class Bird extends Component
 
         this.animation.stop();
 
+
+        // working
         tween(this.node)
             .by(this.jumpDuration,
                 {
@@ -48,6 +50,48 @@ export class Bird extends Component
                 }
             )
             .start();
+
+
+        /*
+        // working
+        tween(this.location)
+            .by(this.jumpDuration,
+                {
+                    y: this.jumpHeight
+                },
+                {
+                    easing: 'smooth',
+                    onUpdate: (target: Vec3, ratio: number) =>
+                    {
+                        console.log('onUpdate', target, 'ratio', ratio, 'before', this.node.position);
+                        this.node.setPosition(target);
+                        console.log('onUpdate', target, 'ratio', ratio, 'after', this.node.position);
+                    },
+                }
+            )
+            .start();
+        */
+
+        /*
+        // not working
+        tween(this.node.position)
+            .by(this.jumpDuration,
+                {
+                    y: this.jumpHeight
+                },
+                {
+                    easing: 'smooth',
+                    onUpdate: (target: Vec3, ratio: number) =>
+                    {
+                        console.log('onUpdate', target, 'ratio', ratio, 'before', this.node.position);
+                        this.node.setPosition(target);
+                        console.log('onUpdate', target, 'ratio', ratio, 'after', this.node.position);
+                    }
+                }
+            )
+            .start();
+        */
+
         this.animation.play();
     }
 }
