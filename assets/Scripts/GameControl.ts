@@ -1,6 +1,7 @@
 import { __private, _decorator, CCInteger, Component, director, EventKeyboard, EventTouch, Input, input, KeyCode, Node } from 'cc';
 import { Ground } from './Ground';
 import { Result } from './Result';
+import { Bird } from './Bird';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameControl')
@@ -17,6 +18,9 @@ export class GameControl extends Component
 
     @property({ type: Result })
     public result: Result = null;
+
+    @property({ type: Bird })
+    public bird: Bird = null;
 
     onLoad()
     {
@@ -37,6 +41,7 @@ export class GameControl extends Component
     onTouchStart(event: EventTouch)
     {
         console.log('touch start', event.getLocation());
+        this.bird.fly();
     }
 
     onKeyDown(event: EventKeyboard)
@@ -45,6 +50,7 @@ export class GameControl extends Component
         switch (event.keyCode)
         {
             case KeyCode.SPACE:
+                this.bird.fly();
                 break;
 
             case KeyCode.KEY_A:
@@ -57,6 +63,10 @@ export class GameControl extends Component
 
             case KeyCode.KEY_Q:
                 this.resetGame();
+                break;
+
+            default:
+                this.startGame();
                 break;
         }
     }
@@ -74,6 +84,7 @@ export class GameControl extends Component
     resetGame()
     {
         this.result.resetScore();
+        this.bird.resetBird();
         this.startGame();
     }
 
