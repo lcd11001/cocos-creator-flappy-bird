@@ -8,10 +8,10 @@ export class Result extends Component
     public scoreLabel: Label = null;
 
     @property({ type: Label })
-    public highScoreLabel: Label = null;
+    public topScoreLabel: Label = null;
 
     @property({ type: Label })
-    public resultEnd: Label = null;
+    public tryAgainLabel: Label = null;
 
     maxScore = 0;
     currentScore = 0;
@@ -35,17 +35,17 @@ export class Result extends Component
     updateHighScore(num: number)
     {
         this.maxScore = num;
-        this.highScoreLabel.string = `High score: ${this.maxScore}`;
+        this.topScoreLabel.string = `High score: ${this.maxScore}`;
     }
 
     showHighScore()
     {
-        this.highScoreLabel.node.active = true;
+        this.topScoreLabel.node.active = true;
     }
 
     hideHighScore()
     {
-        this.highScoreLabel.node.active = false;
+        this.topScoreLabel.node.active = false;
     }
 
     resetScore()
@@ -66,14 +66,14 @@ export class Result extends Component
 
         this.showScore();
         this.showHighScore();
-        this.resultEnd.node.active = true;
+        this.tryAgainLabel.node.active = true;
     }
 
     hideResult()
     {
         this.hideScore();
         this.hideHighScore();
-        this.resultEnd.node.active = false;
+        this.tryAgainLabel.node.active = false;
     }
 }
 
