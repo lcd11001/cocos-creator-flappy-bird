@@ -22,7 +22,7 @@ export class Ground extends Component
         this.startLocation();
     }
 
-    public setSpeed(speed: number)
+    setSpeed(speed: number)
     {
         this.moveSpeed = speed;
     }

@@ -13,8 +13,19 @@ export class Result extends Component
     @property({ type: Label })
     public tryAgainLabel: Label = null;
 
+    @property({ type: Label })
+    public pressAnyKeyLabel: Label = null;
+
     maxScore = 0;
     currentScore = 0;
+
+    protected onLoad(): void
+    {
+        this.hideScore();
+        this.hideHighScore();
+        this.hideTryAgain();
+        this.hidePressAnyKey();
+    }
 
     updateScore(num: number)
     {
@@ -60,20 +71,43 @@ export class Result extends Component
         this.updateScore(this.currentScore + 1);
     }
 
+    showTryAgain()
+    {
+        this.tryAgainLabel.node.active = true;
+    }
+
+    hideTryAgain()
+    {
+        this.tryAgainLabel.node.active = false;
+    }
+
+    showPressAnyKey()
+    {
+        this.pressAnyKeyLabel.node.active = true;
+    }
+
+    hidePressAnyKey()
+    {
+        this.pressAnyKeyLabel.node.active = false;
+    }
+
     showResult()
     {
         this.updateHighScore(Math.max(this.maxScore, this.currentScore));
 
         this.showScore();
+
         this.showHighScore();
-        this.tryAgainLabel.node.active = true;
+        this.showTryAgain();
     }
 
     hideResult()
     {
-        this.hideScore();
+        this.showScore();
+
         this.hideHighScore();
-        this.tryAgainLabel.node.active = false;
+        this.hideTryAgain();
+        this.hidePressAnyKey();
     }
 }
 

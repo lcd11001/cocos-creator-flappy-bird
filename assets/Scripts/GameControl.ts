@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Component, Node } from 'cc';
+import { __private, _decorator, CCInteger, Component, director, EventKeyboard, EventTouch, Input, input, KeyCode, Node } from 'cc';
 import { Ground } from './Ground';
 import { Result } from './Result';
 const { ccclass, property } = _decorator;
@@ -20,18 +20,73 @@ export class GameControl extends Component
 
     onLoad()
     {
-        this.ground.setSpeed(this.speed);
-        this.result.hideResult();
+        this.initListener();
+    }
+
+    protected start(): void
+    {
+        this.initGame();
     }
 
     initListener()
     {
+        input.on(Input.EventType.TOUCH_START, this.onTouchStart, this);
+        input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
+    }
 
+    onTouchStart(event: EventTouch)
+    {
+        console.log('touch start', event.getLocation());
+    }
+
+    onKeyDown(event: EventKeyboard)
+    {
+        console.log('key down', event.keyCode);
+        switch (event.keyCode)
+        {
+            case KeyCode.SPACE:
+                break;
+
+            case KeyCode.KEY_A:
+                this.gameOver();
+                break;
+
+            case KeyCode.KEY_P:
+                this.result.addScore();
+                break;
+
+            case KeyCode.KEY_Q:
+                this.resetGame();
+                break;
+        }
+    }
+
+    initGame()
+    {
+        this.ground.setSpeed(this.speed);
+        this.ground.startLocation();
+
+        this.result.showPressAnyKey();
+
+        director.pause();
+    }
+
+    resetGame()
+    {
+        this.result.resetScore();
+        this.startGame();
     }
 
     startGame()
     {
+        this.result.hideResult();
+        director.resume();
+    }
 
+    gameOver()
+    {
+        this.result.showResult();
+        director.pause();
     }
 }
 
