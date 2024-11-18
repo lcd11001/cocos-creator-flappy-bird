@@ -13,15 +13,18 @@ export class Ground extends Component
     @property({ type: Node, tooltip: 'Ground 3 asset' })
     public ground3: Node = null;
 
-
-    @property({ tooltip: 'Game speed' })
-    public gameSpeed: number = 50;
+    private moveSpeed: number = 50;
 
     private groundWidth = 0;
 
     protected onLoad(): void
     {
         this.startLocation();
+    }
+
+    public setSpeed(speed: number)
+    {
+        this.moveSpeed = speed;
     }
 
     startLocation()
@@ -36,7 +39,7 @@ export class Ground extends Component
     moveGround(node: Node, deltaTime: number)
     {
         let x = node.position.x;
-        let distance = this.gameSpeed * deltaTime;
+        let distance = this.moveSpeed * deltaTime;
         x -= distance;
         node.setPosition(new Vec3(x, node.position.y, node.position.z));
 
@@ -52,9 +55,9 @@ export class Ground extends Component
         return false;
     }
 
-    resetGround(node: Node, tempStartLocation: Vec3)
+    resetGround(node: Node, lastLocation: Vec3)
     {
-        node.setPosition(tempStartLocation);
+        node.setPosition(lastLocation);
     }
 
     updateGround(curNode: Node, deltaTime: number, lastNode: Node)
