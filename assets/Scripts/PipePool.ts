@@ -18,6 +18,7 @@ export class PipePool extends Component
 
     public initPool()
     {
+        // console.log('init pipe pool');
         for (let i = 0; i < this.poolSize; i++)
         {
             const pipe = this.createPipe();
@@ -36,16 +37,22 @@ export class PipePool extends Component
         if (this.pipePool.size() == 0)
         {
             this.pipePool.put(this.createPipe());
+            console.warn('pipe pool is empty, create new pipe');
         }
 
+        // 'reuse' callback method will be invoked
         const node = this.pipePool.get();
+        // console.log('get pipe', node.uuid);
         this.root.addChild(node);
         return node.getComponent(Pipes);
     }
 
     public recyclePipe(pipe: Pipes)
     {
+        // console.log('recycle pipe', pipe.node.uuid);
         pipe.node.removeFromParent();
+
+        // 'unuse' callback method will be invoked
         this.pipePool.put(pipe.node);
     }
 }

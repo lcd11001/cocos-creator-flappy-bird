@@ -36,6 +36,7 @@ export class GameControl extends Component
     onLoad()
     {
         this.initListener();
+        this.pipePool.initPool();
     }
 
     protected start(): void

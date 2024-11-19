@@ -1,4 +1,4 @@
-import { _decorator, Component, find, Node, random, UITransform, Vec3 } from 'cc';
+import { _decorator, CCInteger, Component, find, Node, random, UITransform, Vec3 } from 'cc';
 import { GameControl } from './GameControl';
 const { ccclass, property } = _decorator;
 
@@ -16,25 +16,25 @@ export class Pipes extends Component
     @property({ type: Node, tooltip: 'The bottom pipe node' })
     public bottomPipe: Node = null;
 
-    @property({ type: Number, tooltip: 'The speed of the pipe' })
+    @property({ type: CCInteger, tooltip: 'The speed of the pipe' })
     public speed: number = 0;
 
-    @property({ type: Number, tooltip: 'The randomize gap distance between the pipes', readonly: true })
+    @property({ type: CCInteger, tooltip: 'The randomize gap distance between the pipes', readonly: true })
     public gap: number = 0;
 
-    @property({ type: Number, tooltip: 'The min gap distance between the pipes', step: 1 })
+    @property({ type: CCInteger, tooltip: 'The min gap distance between the pipes', step: 1 })
     public minGap: number = 100;
 
-    @property({ type: Number, tooltip: 'The max gap distance between the pipes', step: 1 })
+    @property({ type: CCInteger, tooltip: 'The max gap distance between the pipes', step: 1 })
     public maxGap: number = 400;
 
-    @property({ type: Number, tooltip: 'The randomize offset of pipe', readonly: true })
+    @property({ type: CCInteger, tooltip: 'The randomize offset of pipe', readonly: true })
     public offset: number = 0;
 
-    @property({ type: Number, tooltip: 'The min offset of pipe', step: 1 })
+    @property({ type: CCInteger, tooltip: 'The min offset of pipe', step: 1 })
     public minOffset: number = -100;
 
-    @property({ type: Number, tooltip: 'The max offset of pipe', step: 1 })
+    @property({ type: CCInteger, tooltip: 'The max offset of pipe', step: 1 })
     public maxOffset: number = 100;
 
     private pipeLocation: Vec3 = new Vec3(0, 0, 0);
@@ -47,10 +47,13 @@ export class Pipes extends Component
 
     protected onLoad(): void
     {
+        // console.log('pipe on load', this.node.uuid);
         this.getCanvasSize();
 
         this.getPipeSpeed();
         this.getPipesSize();
+
+        this.initPipe();
     }
 
     getPipeSpeed()
@@ -78,15 +81,13 @@ export class Pipes extends Component
         if (canvas)
         {
             this.canvasSizeX = canvas.getComponent(UITransform).width;
-            console.log('canvasSizeX', this.canvasSizeX);
+            // console.log('canvasSizeX', this.canvasSizeX);
         }
     }
 
 
     initPipe()
     {
-        this.isOutOfScreen = false;
-
         this.gap = randomAB(this.minGap, this.maxGap);
         this.offset = randomAB(this.minOffset, this.maxOffset);
 
@@ -103,14 +104,18 @@ export class Pipes extends Component
 
     update(dt: number)
     {
-        if (!this.isOutOfScreen && this.isPipeOut())
+        if (this.isOutOfScreen)
         {
-            this.isOutOfScreen = true;
-            console.log('pipe out');
-            this.gameControl.passPipe(this);
             return;
         }
+
         this.movePipe(this.speed, dt);
+
+        if (this.isPipeOut())
+        {
+            // console.log('pipe out');
+            this.gameControl.passPipe(this);
+        }
     }
 
     movePipe(speed: number, dt: number)
@@ -126,13 +131,15 @@ export class Pipes extends Component
 
     reuse()
     {
-        console.log('reuse pipe');
+        // console.log('reuse pipe');
         this.initPipe();
+        this.isOutOfScreen = false;
     }
 
     unuse()
     {
-        console.log('unuse pipe');
+        this.isOutOfScreen = true;
+        // console.log('unuse pipe');
     }
 }
 
