@@ -1,7 +1,9 @@
-import { __private, _decorator, CCInteger, Component, director, EventKeyboard, EventTouch, Input, input, KeyCode, Node } from 'cc';
+import { __private, _decorator, CCFloat, CCInteger, Component, director, EventKeyboard, EventTouch, Input, input, KeyCode, Node } from 'cc';
 import { Ground } from './Ground';
 import { Result } from './Result';
 import { Bird } from './Bird';
+import { PipePool } from './PipePool';
+import { Pipes } from './Pipes';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameControl')
@@ -13,6 +15,9 @@ export class GameControl extends Component
     @property({ type: CCInteger })
     public pipeSpeed: number = 200;
 
+    @property({ type: CCFloat })
+    public pipeInterval: number = 2;
+
     @property({ type: Ground })
     public ground: Ground = null;
 
@@ -21,6 +26,12 @@ export class GameControl extends Component
 
     @property({ type: Bird })
     public bird: Bird = null;
+
+    @property({ type: PipePool })
+    public pipePool: PipePool = null;
+
+    private pipeTimer: number = 0;
+    private allowSpawnPipe: boolean = false;
 
     onLoad()
     {
@@ -90,6 +101,9 @@ export class GameControl extends Component
 
     startGame()
     {
+        this.allowSpawnPipe = true;
+        this.pipeTimer = this.pipeInterval;
+
         this.result.hideResult();
         director.resume();
     }
@@ -100,9 +114,28 @@ export class GameControl extends Component
         director.pause();
     }
 
-    passPipe()
+    passPipe(pipe: Pipes)
     {
         this.result.addScore();
+        this.pipePool.recyclePipe(pipe);
+    }
+
+    spwanPipe()
+    {
+        this.pipePool.getPipe();
+    }
+
+    protected update(dt: number): void
+    {
+        if (this.allowSpawnPipe)
+        {
+            this.pipeTimer += dt;
+            if (this.pipeTimer >= this.pipeInterval)
+            {
+                this.pipeTimer = 0;
+                this.spwanPipe();
+            }
+        }
     }
 }
 

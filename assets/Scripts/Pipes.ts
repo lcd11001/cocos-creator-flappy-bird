@@ -51,8 +51,6 @@ export class Pipes extends Component
 
         this.getPipeSpeed();
         this.getPipesSize();
-
-        this.initPipe();
     }
 
     getPipeSpeed()
@@ -109,8 +107,7 @@ export class Pipes extends Component
         {
             this.isOutOfScreen = true;
             console.log('pipe out');
-            this.gameControl.passPipe();
-            this.destroy();
+            this.gameControl.passPipe(this);
             return;
         }
         this.movePipe(this.speed, dt);
@@ -125,6 +122,17 @@ export class Pipes extends Component
     isPipeOut()
     {
         return this.pipeLocation.x < -this.startPipeX;
+    }
+
+    reuse()
+    {
+        console.log('reuse pipe');
+        this.initPipe();
+    }
+
+    unuse()
+    {
+        console.log('unuse pipe');
     }
 }
 
