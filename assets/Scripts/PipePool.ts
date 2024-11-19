@@ -59,10 +59,18 @@ export class PipePool extends Component
     resetPool()
     {
         // console.log('reset pipe pool');
-        this.root.children.forEach(child =>
+        // this.root.children.forEach(child =>
+        while (this.root.children.length > 0)
         {
+            let child = this.root.children[0];
             this.recyclePipe(child.getComponent(Pipes));
-        });
+        };
+
+        /*
+        this.root.removeAllChildren();
+        this.pipePool.clear();
+        this.initPool();
+        */
     }
 }
 
