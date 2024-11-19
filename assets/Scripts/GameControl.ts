@@ -54,6 +54,10 @@ export class GameControl extends Component
     onTouchStart(event: EventTouch)
     {
         // console.log('touch start', event.getLocation());
+        if (this.isGameOver)
+        {
+            this.resetGame();
+        }
         this.bird.fly();
     }
 
@@ -63,7 +67,10 @@ export class GameControl extends Component
         switch (event.keyCode)
         {
             case KeyCode.SPACE:
-                this.bird.fly();
+                if (!this.isGameOver)
+                {
+                    this.bird.fly();
+                }
                 break;
 
             case KeyCode.ESCAPE:
@@ -71,7 +78,10 @@ export class GameControl extends Component
                 break;
 
             case KeyCode.KEY_P:
-                this.result.addScore();
+                if (!this.isGameOver)
+                {
+                    this.result.addScore();
+                }
                 break;
 
             default:
