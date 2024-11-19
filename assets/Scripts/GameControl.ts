@@ -99,6 +99,11 @@ export class GameControl extends Component
         this.result.showResult();
         director.pause();
     }
+
+    passPipe()
+    {
+        this.result.addScore();
+    }
 }
 
 

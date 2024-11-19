@@ -140,7 +140,7 @@
     "_enabled": true,
     "__prefab": null,
     "speed": 300,
-    "pipeSpeed": 200,
+    "pipeSpeed": 50,
     "ground": {
       "__id__": 5
     },
@@ -1501,8 +1501,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": 6.894999999999982,
+      "y": -5.684341886080802e-14,
       "z": 0
     },
     "_lrot": {
