@@ -34,7 +34,7 @@ export class Bird extends Component
             return;
         }
 
-        console.log('fly jumpHeight', this.jumpHeight, 'jumpDuration', this.jumpDuration);
+        // console.log('fly jumpHeight', this.jumpHeight, 'jumpDuration', this.jumpDuration);
 
         this.animation.stop();
 

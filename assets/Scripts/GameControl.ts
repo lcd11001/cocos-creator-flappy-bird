@@ -40,13 +40,13 @@ export class GameControl extends Component
 
     onTouchStart(event: EventTouch)
     {
-        console.log('touch start', event.getLocation());
+        // console.log('touch start', event.getLocation());
         this.bird.fly();
     }
 
     onKeyDown(event: EventKeyboard)
     {
-        console.log('key down', event.keyCode);
+        // console.log('key down', event.keyCode);
         switch (event.keyCode)
         {
             case KeyCode.SPACE:
