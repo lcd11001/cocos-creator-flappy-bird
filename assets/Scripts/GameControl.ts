@@ -32,6 +32,7 @@ export class GameControl extends Component
 
     private pipeTimer: number = 0;
     private allowSpawnPipe: boolean = false;
+    private isGameOver: boolean = false;
 
     onLoad()
     {
@@ -65,7 +66,7 @@ export class GameControl extends Component
                 this.bird.fly();
                 break;
 
-            case KeyCode.KEY_A:
+            case KeyCode.ESCAPE:
                 this.gameOver();
                 break;
 
@@ -73,12 +74,11 @@ export class GameControl extends Component
                 this.result.addScore();
                 break;
 
-            case KeyCode.KEY_Q:
-                this.resetGame();
-                break;
-
             default:
-                this.startGame();
+                if (this.isGameOver)
+                {
+                    this.resetGame();
+                }
                 break;
         }
     }
@@ -89,6 +89,7 @@ export class GameControl extends Component
         this.ground.startLocation();
 
         this.result.showPressAnyKey();
+        this.isGameOver = true;
 
         director.pause();
     }
@@ -97,13 +98,16 @@ export class GameControl extends Component
     {
         this.result.resetScore();
         this.bird.resetBird();
+        this.pipePool.resetPool();
+
         this.startGame();
     }
 
     startGame()
     {
-        this.allowSpawnPipe = true;
         this.pipeTimer = this.pipeInterval;
+        this.allowSpawnPipe = true;
+        this.isGameOver = false;
 
         this.result.hideResult();
         director.resume();
@@ -111,6 +115,9 @@ export class GameControl extends Component
 
     gameOver()
     {
+        this.allowSpawnPipe = false;
+        this.isGameOver = true;
+
         this.result.showResult();
         director.pause();
     }

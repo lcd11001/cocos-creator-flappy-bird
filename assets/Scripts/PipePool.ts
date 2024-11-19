@@ -55,6 +55,15 @@ export class PipePool extends Component
         // 'unuse' callback method will be invoked
         this.pipePool.put(pipe.node);
     }
+
+    resetPool()
+    {
+        // console.log('reset pipe pool');
+        this.root.children.forEach(child =>
+        {
+            this.recyclePipe(child.getComponent(Pipes));
+        });
+    }
 }
 
 

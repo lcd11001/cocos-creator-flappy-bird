@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Component, find, Node, random, UITransform, Vec3 } from 'cc';
+import { _decorator, CCInteger, Collider2D, Component, find, Node, random, UITransform, Vec3 } from 'cc';
 import { GameControl } from './GameControl';
 const { ccclass, property } = _decorator;
 
@@ -44,16 +44,26 @@ export class Pipes extends Component
     private isOutOfScreen: boolean = false;
 
     private gameControl: GameControl = null;
+    private colliderTop: Collider2D = null;
+    private colliderBottom: Collider2D = null;
 
     protected onLoad(): void
     {
-        // console.log('pipe on load', this.node.uuid);
+        console.log('pipe on load', this.node.uuid);
+        this.getColliders();
+
         this.getCanvasSize();
 
         this.getPipeSpeed();
         this.getPipesSize();
 
         this.initPipe();
+    }
+
+    private getColliders()
+    {
+        this.colliderTop = this.topPipe.getComponent(Collider2D);
+        this.colliderBottom = this.bottomPipe.getComponent(Collider2D);
     }
 
     getPipeSpeed()
@@ -131,15 +141,25 @@ export class Pipes extends Component
 
     reuse()
     {
-        // console.log('reuse pipe');
+        console.log('reuse pipe');
         this.initPipe();
         this.isOutOfScreen = false;
+        if (this.colliderTop && this.colliderBottom)
+        {
+            this.colliderTop.enabled = true;
+            this.colliderBottom.enabled = true;
+        }
     }
 
     unuse()
     {
+        console.log('unuse pipe');
         this.isOutOfScreen = true;
-        // console.log('unuse pipe');
+        if (this.colliderTop && this.colliderBottom)
+        {
+            this.colliderTop.enabled = false;
+            this.colliderBottom.enabled = false;
+        }
     }
 }
 
