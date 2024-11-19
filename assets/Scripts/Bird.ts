@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, Component, Node, Vec3, Animation, tween, director, Collider2D, Contact2DType, IPhysics2DContact } from 'cc';
+import { _decorator, CCFloat, Component, Node, Vec3, Animation, tween, director, Collider2D, Contact2DType, IPhysics2DContact, RigidBody2D, Vec2 } from 'cc';
 import { GameControl } from './GameControl';
 const { ccclass, property } = _decorator;
 
@@ -18,10 +18,12 @@ export class Bird extends Component
     private animation: Animation = null;
     private location: Vec3 = new Vec3(0, 0, 0);
     private collider: Collider2D = null;
+    private rigidBody: RigidBody2D = null;
 
     onLoad()
     {
         this.animation = this.node.getComponent(Animation);
+        this.rigidBody = this.node.getComponent(RigidBody2D);
         this.collider = this.node.getComponent(Collider2D);
         this.collider.on(Contact2DType.BEGIN_CONTACT, this.onCollisionEnter, this);
 
@@ -44,9 +46,14 @@ export class Bird extends Component
         this.location = new Vec3(0, 0, 0);
         this.node.setPosition(this.location);
 
-        // Reset the collider by disabling and re-enabling it
-        this.collider.enabled = false;
-        this.collider.enabled = true;
+        // Reset rotation
+        this.node.setRotationFromEuler(0, 0, 0);
+
+        // If using a Rigidbody2D, reset its physics properties (add this if applicable)
+        this.rigidBody.linearVelocity = new Vec2(0, 0);
+        this.rigidBody.angularVelocity = 0;
+        this.rigidBody.wakeUp();
+
     }
 
     fly()
