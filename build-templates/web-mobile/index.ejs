@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
 
-  <title>Cocos Creator | FlappyBird</title>
+  <title>Cocos Creator | <%= projectName %></title>
 
   <!--http://www.html5rocks.com/en/mobile/mobifying/-->
   <meta name="viewport"
@@ -34,7 +34,7 @@
   <!--<link rel="apple-touch-icon" href=".png" />-->
   <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
 
-  <link rel="stylesheet" type="text/css" href="style.f76d1.css"/>
+  <link rel="stylesheet" type="text/css" href="<%= cssUrl %>"/>
   
   <base href="/cocos-creator-flappy-bird/">
 
@@ -45,22 +45,6 @@
         <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="99"></canvas>
       </div>
     </div>
-  
-
-<!-- Polyfills bundle. -->
-
-<script src="src/polyfills.bundle.5adbf.js" charset="utf-8"> </script>
-
-
-<!-- SystemJS support. -->
-<script src="src/system.bundle.543e6.js" charset="utf-8"> </script>
-
-<!-- Import map -->
-<script src="src/import-map.b1a77.json" type="systemjs-importmap" charset="utf-8"> </script>
-
-<script>
-    System.import('./index.43afe.js').catch(function(err) { console.error(err); })
-</script>
-
+  <%- include(cocosTemplate, {}) %>
 </body>
 </html>
