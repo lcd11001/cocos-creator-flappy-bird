@@ -1,3 +1,5 @@
 include:
   - "docs/_*"
   - "docs/_*/**"
+  - "cocos-js/_*"
+  - "cocos-js/_*/**"
