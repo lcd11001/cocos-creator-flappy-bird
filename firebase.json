@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "build/web-mobile",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
