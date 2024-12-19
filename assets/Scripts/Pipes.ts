@@ -1,5 +1,5 @@
 import { _decorator, CCInteger, Collider2D, Component, find, Node, random, UITransform, Vec3 } from 'cc';
-import { GameControl } from './GameControl';
+import { GameControlBase } from './GameControlBase';
 const { ccclass, property } = _decorator;
 
 const randomAB = (a: number, b: number) =>
@@ -43,7 +43,7 @@ export class Pipes extends Component
     private startPipeX: number = 0;
     private isOutOfScreen: boolean = false;
 
-    private gameControl: GameControl = null;
+    private gameControl: GameControlBase = null;
     private colliderTop: Collider2D = null;
     private colliderBottom: Collider2D = null;
 
@@ -71,8 +71,8 @@ export class Pipes extends Component
         const control = find('GameControl');
         if (control)
         {
-            this.gameControl = control.getComponent(GameControl);
-            this.speed = this.gameControl.pipeSpeed;
+            this.gameControl = control.getComponent(GameControlBase);
+            this.speed = this.gameControl.PipeSpeed;
         }
     }
 
