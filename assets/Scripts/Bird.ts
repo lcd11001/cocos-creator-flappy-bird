@@ -1,5 +1,5 @@
 import { _decorator, CCFloat, Component, Node, Vec3, Animation, tween, director, Collider2D, Contact2DType, IPhysics2DContact, RigidBody2D, Vec2 } from 'cc';
-import { GameControl } from './GameControl';
+import { GameControlBase } from './GameControlBase';
 const { ccclass, property } = _decorator;
 
 @ccclass('Bird')
@@ -12,8 +12,8 @@ export class Bird extends Component
     @property({ type: CCFloat, tooltip: 'how long can they fly' })
     public jumpDuration: number = 0;
 
-    @property({ type: GameControl })
-    public gameControl: GameControl = null;
+    @property({ type: GameControlBase })
+    public gameControl: GameControlBase = null;
 
     private animation: Animation = null;
     private location: Vec3 = new Vec3(0, 0, 0);

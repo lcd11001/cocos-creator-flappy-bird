@@ -4,10 +4,11 @@ import { Result } from './Result';
 import { Bird } from './Bird';
 import { PipePool } from './PipePool';
 import { Pipes } from './Pipes';
+import { GameControlBase } from './GameControlBase';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameControl')
-export class GameControl extends Component
+export class GameControl extends GameControlBase
 {
     @property({ type: CCInteger })
     public speed: number = 300;
@@ -33,6 +34,11 @@ export class GameControl extends Component
     private pipeTimer: number = 0;
     private allowSpawnPipe: boolean = false;
     private isGameOver: boolean = false;
+
+    get PipeSpeed(): number
+    {
+        return this.pipeSpeed;
+    }
 
     onLoad()
     {
